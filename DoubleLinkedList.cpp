@@ -146,17 +146,26 @@ Node *get_element(List *list, int i) {
     }
 }
 
+void remove_node(List *list, Node *node) {
+    if (node->pred) {
+        node->pred->next = node->next;
+    } else {
+        list->header = node->next;
+    }
+    if (node->next) {
+        node->next->pred = node->pred;
+    } else {
+        list->tailer = node->pred;
+    }
+    delete node;
+}
+
 bool pop_front(List *list) {
     if (isEmpty(list)) {
         cout << "err" << endl;
         return false;
     }
-    Node *to_delete = list->header;
-    list->header = to_delete->next;
-    if (list->header != nullptr) {
-        list->header->pred = nullptr;
-    }
-    delete to_delete;
+    remove_node(list, list->header);
     return true;
 }
 bool pop_back(List *list) {
@@ -164,58 +173,32 @@ bool pop_back(List *list) {
         cout << "err" << endl;
         return false;
     }
-    Node *to_delete = list->tailer;
-    list->tailer = to_delete->pred;
-    if (list->tailer != nullptr) {
-        list->tailer->next = nullptr;
-    }
-    delete to_delete;
+    remove_node(list, list->tailer);
     return true;
 }
 bool pop(List *list, int i) {
-    if (0 <= i && i < size(list) && !isEmpty(list)) {
-        if (i == 0) {
-            pop_front(list);
-            return true;
-        }
-        if (i == size(list) - 1) {
-            pop_back(list);
-            return true;
-        }
-        Node *first = list->header;
-        for (int j = 0; j < i; ++j) {
-            first = first->next;
-        }
-        Node* p = first->pred;
-        Node* n = first->next;
-        delete first;
-        p->next = n;
-        n->pred = p;
-        return true;
-    } else {
-        cout << "err" << endl;
+    Node* node = get_element(list, i);
+    if (!node) {
         return false;
     }
+    remove_node(list, node);
+    return true;
 }
 void delete_by_value(List *list, double value) {
-    int j = 0;
     for (Node* i = list->header; i->next != nullptr; i = i->next) {
         double v = i->value;
         if (value - eps <= v && v <= value + eps) {
-            pop(list, j);
+            remove_node(list, i);
             return;
         }
-        j++;
     }
 }
 bool delete_all_by_value(List *list, double value) {
-    int j = 0;
     for (Node* i = list->header; i->next != nullptr; i = i->next) {
         double v = i->value;
         if (value - eps <= v && v <= value + eps) {
-            pop(list, j);
+            remove_node(list, i);
         }
-        j++;
     }
     return false;
 }
@@ -224,7 +207,7 @@ int find_in_list(List *list, double value, bool fromBegin) {
         Node *last = list->header;
         for (int i = 0; i < size(list); i++) {
             double v = last->value;
-            if (value - eps <= v && v >= value + eps) {
+            if (value - eps <= v && v <= value + eps) {
                 return i;
             }
             last = last->next;
@@ -234,7 +217,7 @@ int find_in_list(List *list, double value, bool fromBegin) {
         Node *last = list->tailer;
         for (int i = size(list) - 1; i >= 0; i--) {
             double v = last->value;
-            if (value - eps <= v && v >= value + eps) {
+            if (value - eps <= v && v <= value + eps) {
                 return i;
             }
             last = last->pred;
@@ -281,6 +264,8 @@ List *extend(List *list1, List *list2) {
     Node *first = list2->header;
     last->next = first;
     first->pred = last;
+    list1->tailer = list2->tailer;
+    list2->header = list2->tailer;
     return list1;
 }
 
