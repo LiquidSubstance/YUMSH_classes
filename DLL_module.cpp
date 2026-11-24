@@ -4,37 +4,37 @@ using namespace std;
 
 const double eps = 1e-7;
 
-Node::Node(double v): value(v), next(nullptr), pred(nullptr) {}
+ListNode::ListNode(double v): value(v), next(nullptr), pred(nullptr) {}
 
-double Node::get_value() {
+double ListNode::get_value() {
     return value;
 }
 
-void Node::set_value(double v) {
+void ListNode::set_value(double v) {
     value = v;
 }
 
-Node* Node::get_next() {
+ListNode* ListNode::get_next() {
     return next;
 }
 
-void Node::set_next(Node* n) {
+void ListNode::set_next(ListNode* n) {
     next = n;
 }
 
-Node* Node::get_pred() {
+ListNode* ListNode::get_pred() {
     return pred;
 }
 
-void Node::set_pred(Node* p) {
+void ListNode::set_pred(ListNode* p) {
     pred = p;
 }
 
-void DoubleLinkedList::set_header(Node* h) {
+void DoubleLinkedList::set_header(ListNode* h) {
     header = h;
 }
 
-void DoubleLinkedList::set_tailer(Node* t) {
+void DoubleLinkedList::set_tailer(ListNode* t) {
     tailer = t;
 }
 
@@ -46,7 +46,7 @@ bool DoubleLinkedList::equals(double a, double b) {
     return a - eps <= b && b <= a + eps;
 }
 
-void DoubleLinkedList::remove_node(Node* node) {
+void DoubleLinkedList::remove_node(ListNode* node) {
     if (node == nullptr) {
         throw "Trying to delete an unexisting node";
     }
@@ -68,11 +68,11 @@ void DoubleLinkedList::remove_node(Node* node) {
 }
 DoubleLinkedList::DoubleLinkedList(): header(nullptr), tailer(nullptr), sz(0) {}
 
-Node* DoubleLinkedList::get_header() {
+ListNode* DoubleLinkedList::get_header() {
     return header;
 }
 
-Node* DoubleLinkedList::get_tailer() {
+ListNode* DoubleLinkedList::get_tailer() {
     return tailer;
 }
 
@@ -85,7 +85,7 @@ int DoubleLinkedList::size() {
 }
 
 void DoubleLinkedList::push_front(double v) {
-    Node* node = new Node(v);
+    ListNode* node = new ListNode(v);
     if (empty()) {
         header = node;
         tailer = node;
@@ -98,7 +98,7 @@ void DoubleLinkedList::push_front(double v) {
 }
 
 void DoubleLinkedList::push_back(double v) {
-    Node* node = new Node(v);
+    ListNode* node = new ListNode(v);
     if (empty()) {
         header = node;
         tailer = node;
@@ -110,11 +110,11 @@ void DoubleLinkedList::push_back(double v) {
     sz++;
 }
 
-Node* DoubleLinkedList::get_element(int i) {
+ListNode* DoubleLinkedList::get_element(int i) {
     if (i < 0 || i >= sz) {
         throw " Tried to get element by index out of borders";
     }
-    Node* cur = header;
+    ListNode* cur = header;
     for (int j = 0; j < i; ++j) {
         cur = cur->get_next();
     }
@@ -122,9 +122,9 @@ Node* DoubleLinkedList::get_element(int i) {
 }
 
 void DoubleLinkedList::push_before_i(double v, int i) {
-    Node* first = get_element(i);
-    Node* node = new Node(v);
-    Node* second = first->get_pred();
+    ListNode* first = get_element(i);
+    ListNode* node = new ListNode(v);
+    ListNode* second = first->get_pred();
     if (second != nullptr) {
         second->set_next(node);
         node->set_pred(second);
@@ -137,9 +137,9 @@ void DoubleLinkedList::push_before_i(double v, int i) {
 }
 
 void DoubleLinkedList::push_after_i(double v, int i) {
-    Node* first = get_element(i);
-    Node* node = new Node(v);
-    Node* second = first->get_next();
+    ListNode* first = get_element(i);
+    ListNode* node = new ListNode(v);
+    ListNode* second = first->get_next();
     if (second != nullptr) {
         second->set_pred(node);
         node->set_next(second);
@@ -151,7 +151,7 @@ void DoubleLinkedList::push_after_i(double v, int i) {
     sz++;
 }
 bool DoubleLinkedList::change_element(int i, double v) {
-    Node* node = get_element(i);
+    ListNode* node = get_element(i);
     node->set_value(v);
     return true;
 }
@@ -173,13 +173,13 @@ bool DoubleLinkedList::pop_back() {
 }
 
 bool DoubleLinkedList::pop(int i) {
-    Node* node = get_element(i);
+    ListNode* node = get_element(i);
     remove_node(node);
     return true;
 }
 
 bool DoubleLinkedList::delete_by_value(double v) {
-    Node* cur = header;
+    ListNode* cur = header;
     while (cur != nullptr) {
         if (equals(cur->get_value(), v)) {
             remove_node(cur);
@@ -192,9 +192,9 @@ bool DoubleLinkedList::delete_by_value(double v) {
 
 bool DoubleLinkedList::delete_all_by_value(double v) {
     bool removed = false;
-    Node* cur = header;
+    ListNode* cur = header;
     while (cur != nullptr) {
-        Node* next = cur->get_next();
+        ListNode* next = cur->get_next();
         if (equals(cur->get_value(), v)) {
             remove_node(cur);
             removed = true;
@@ -209,7 +209,7 @@ bool DoubleLinkedList::delete_all_by_value(double v) {
 }
 int DoubleLinkedList::find_in_list(double v, bool from_begin) {
     if (from_begin) {
-        Node* cur = header;
+        ListNode* cur = header;
         int i = 0;
         while (cur != nullptr) {
             if (equals(cur->get_value(), v)) {
@@ -219,7 +219,7 @@ int DoubleLinkedList::find_in_list(double v, bool from_begin) {
             i++;
         }
     } else {
-        Node* cur = tailer;
+        ListNode* cur = tailer;
         int i = sz - 1;
         while (cur != nullptr) {
             if (equals(cur->get_value(), v)) {
@@ -232,12 +232,12 @@ int DoubleLinkedList::find_in_list(double v, bool from_begin) {
     throw "No elements with such value";
 }
 
-Node* DoubleLinkedList::get_max_element() {
+ListNode* DoubleLinkedList::get_max_element() {
     if (empty()) {
         throw "List is empty";
     }
-    Node* max_node = header;
-    Node* cur = header;
+    ListNode* max_node = header;
+    ListNode* cur = header;
     while (cur != nullptr) {
         if (max_node->get_value() <= cur->get_value() - eps) {
             max_node = cur;
@@ -248,7 +248,7 @@ Node* DoubleLinkedList::get_max_element() {
 }
 
 bool DoubleLinkedList::is_non_decreasing() {
-    Node* cur = header;
+    ListNode* cur = header;
     while (cur != nullptr && cur->get_next() != nullptr) {
         if (cur->get_value() > cur->get_next()->get_value()) {
             return false;
@@ -276,7 +276,7 @@ void DoubleLinkedList::extend(DoubleLinkedList& other) {
 }
 
 void DoubleLinkedList::print() {
-    Node* cur = header;
+    ListNode* cur = header;
     while (cur != nullptr) {
         cout << cur->get_value() << " ";
         cur = cur->get_next();
@@ -285,9 +285,9 @@ void DoubleLinkedList::print() {
 }
 
 void DoubleLinkedList::clear() {
-    Node* cur = header;
+    ListNode* cur = header;
     while (cur != nullptr) {
-        Node* next = cur->get_next();
+        ListNode* next = cur->get_next();
         delete cur;
         cur = next;
     }

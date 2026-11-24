@@ -1,49 +1,49 @@
 #pragma once
 
-class Node {
+class ListNode {
 private:
     double value;
-    Node* next;
-    Node* pred;
+    ListNode* next;
+    ListNode* pred;
 public:
     // Конструктор
-    Node(double v);
+    ListNode(double v);
     // Геттеры и Сеттеры
     double get_value();
 
     void set_value(double v);
 
-    Node* get_next();
+    ListNode* get_next();
 
-    void set_next(Node* n);
+    void set_next(ListNode* n);
 
-    Node* get_pred();
+    ListNode* get_pred();
 
-    void set_pred(Node* p);
+    void set_pred(ListNode* p);
 };
 
 class DoubleLinkedList {
 private:
-    Node* header;
-    Node* tailer;
+    ListNode* header;
+    ListNode* tailer;
     int sz;
 
-    void set_header(Node* h);
+    void set_header(ListNode* h);
 
-    void set_tailer(Node* t);
+    void set_tailer(ListNode* t);
 
     void set_size(int c);
 
     bool equals(double a, double b);
 
-    void remove_node(Node* node);
+    void remove_node(ListNode* node);
 public:
     //Конструктор
     DoubleLinkedList();
     //Геттеры
-    Node* get_header();
+    ListNode* get_header();
 
-    Node* get_tailer();
+    ListNode* get_tailer();
 
     //Стандартные операции со списком
     bool empty();
@@ -54,7 +54,7 @@ public:
 
     void push_back(double v);
 
-    Node* get_element(int i);
+    ListNode* get_element(int i);
 
     void push_before_i(double v, int i);
 
@@ -74,7 +74,7 @@ public:
 
     int find_in_list(double v, bool from_begin = true);
 
-    Node* get_max_element();
+    ListNode* get_max_element();
 
     bool is_non_decreasing();
 
