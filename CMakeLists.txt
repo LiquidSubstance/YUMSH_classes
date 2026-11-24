@@ -7,7 +7,7 @@ include_directories(.)
 
 add_executable(YUMSH_classes
         Heap.h
-        Heap.cpp
         Heap_module.cpp
-        )
+        HeapTask3.cpp
+)
 

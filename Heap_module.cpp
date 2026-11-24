@@ -7,7 +7,7 @@ Heap::Heap(): heap({}) {}
 void Heap::insert(int x) {
     heap.push_back(x);
     int i = heap.size() - 1;
-    while (i != 0 && heap[(i - 1) / 2] > heap[i]) {
+    while (i != 0 && heap[(i - 1) / 2] < heap[i]) {
         swap(heap[(i - 1) / 2], heap[i]);
         i = (i - 1) / 2;
     }
@@ -25,10 +25,10 @@ int Heap::extract() {
         int l = 2 * i + 1;
         int r = 2 * i + 2;
         int m = i;
-        if (heap[l] < heap[i]) {
+        if (heap[l] > heap[i]) {
             m = l;
         }
-        if (r < heap.size() && heap[r] < heap[m]) {
+        if (r < heap.size() && heap[r] > heap[m]) {
             m = r;
         }
         if (i == m) {
@@ -38,6 +38,10 @@ int Heap::extract() {
         i = m;
     }
     return mn;
+}
+
+int Heap::size() {
+    return heap.size();
 }
 
 Heap::~Heap() {}

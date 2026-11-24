@@ -12,5 +12,7 @@ public:
 
     int extract();
 
+    int size();
+
     ~Heap();
 };
