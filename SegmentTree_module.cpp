@@ -3,49 +3,49 @@
 
 using namespace std;
 
-Node::Node(int value, int l, int r, Node *left, Node *right): value(value), l(l), r(r), left(left), right(right) {}
+SegmentTreeNode::SegmentTreeNode(int value, int l, int r, SegmentTreeNode *left, SegmentTreeNode *right): value(value), l(l), r(r), left(left), right(right) {}
 
-int Node::get_value() {
+int SegmentTreeNode::get_value() {
     return value;
 }
 
-int Node::get_l() {
+int SegmentTreeNode::get_l() {
     return l;
 }
 
-int Node::get_r() {
+int SegmentTreeNode::get_r() {
     return r;
 }
 
-Node* Node::get_right() {
+SegmentTreeNode* SegmentTreeNode::get_right() {
     return right;
 }
 
-Node* Node::get_left() {
+SegmentTreeNode* SegmentTreeNode::get_left() {
     return left;
 }
 
-void Node::set_value(int v) {
+void SegmentTreeNode::set_value(int v) {
     value = v;
 }
 
-Node::~Node() {
+SegmentTreeNode::~SegmentTreeNode() {
     delete left;
     delete right;
 }
 
-Node* SegmentTree::build_tree(int l, int r, const vector<int>& a) {
+SegmentTreeNode* SegmentTree::build_tree(int l, int r, const vector<int>& a) {
     if (r - l == 1) {
-        return new Node(a[l], l, r, nullptr, nullptr);
+        return new SegmentTreeNode(a[l], l, r, nullptr, nullptr);
     }
     int m = (l + r) / 2;
-    Node* left = build_tree(l, m, a);
-    Node* right = build_tree(m, r, a);
-    return new Node(left->get_value() + right->get_value(), l, r, left, right);
+    SegmentTreeNode* left = build_tree(l, m, a);
+    SegmentTreeNode* right = build_tree(m, r, a);
+    return new SegmentTreeNode(left->get_value() + right->get_value(), l, r, left, right);
 
 }
 
-int SegmentTree::get(Node* cur, int ql, int qr, int l, int r) {
+int SegmentTree::get(SegmentTreeNode* cur, int ql, int qr, int l, int r) {
     if (ql <= l && r <= qr) {
         return cur->get_value();
     }
@@ -57,7 +57,7 @@ int SegmentTree::get(Node* cur, int ql, int qr, int l, int r) {
     return get(cur->get_left(), ql, qr, l, m) + get(cur->get_right(), ql, qr, m, r);
 }
 
-void SegmentTree::update(Node* cur, int v, int i, int l, int r) {
+void SegmentTree::update(SegmentTreeNode* cur, int v, int i, int l, int r) {
     if (r - l == 1) {
         cur->set_value(v);
         return;
@@ -75,7 +75,7 @@ SegmentTree::SegmentTree(const vector<int>& a) {
     root = build_tree(0, a.size(), a);
 }
 
-Node* SegmentTree::get_root() {
+SegmentTreeNode* SegmentTree::get_root() {
     return root;
 }
 

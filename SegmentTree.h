@@ -1,13 +1,13 @@
 #pragma once
 using namespace std;
 #include <vector>
-class Node {
+class SegmentTreeNode {
 private:
     int value;
-    Node* left, *right;
+    SegmentTreeNode* left, *right;
     int l, r;
 public:
-    Node(int value, int l, int r, Node *left, Node *right);
+    SegmentTreeNode(int value, int l, int r, SegmentTreeNode *left, SegmentTreeNode *right);
 
     int get_value();
 
@@ -15,29 +15,29 @@ public:
 
     int get_r();
 
-    Node* get_right();
+    SegmentTreeNode* get_right();
 
-    Node* get_left();
+    SegmentTreeNode* get_left();
 
     void set_value(int v);
 
-    ~Node();
+    ~SegmentTreeNode();
 };
 
 class SegmentTree {
 private:
-    Node* root;
+    SegmentTreeNode* root;
     int n;
-    Node* build_tree(int l, int r, const vector<int>& a);
+    SegmentTreeNode* build_tree(int l, int r, const vector<int>& a);
 
-    int get(Node* cur, int ql, int qr, int l, int r);
+    int get(SegmentTreeNode* cur, int ql, int qr, int l, int r);
 
-    void update(Node* cur, int v, int i, int l, int r);
+    void update(SegmentTreeNode* cur, int v, int i, int l, int r);
 
 public:
     SegmentTree(const vector<int>& a);
 
-    Node* get_root();
+    SegmentTreeNode* get_root();
 
     int sum(int l, int r);
 
