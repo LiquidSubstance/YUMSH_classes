@@ -10,5 +10,6 @@ add_executable(YUMSH_classes
         Heap.h
         Heap_module.cpp
         C.cpp
+        Trie.h
 )
 
