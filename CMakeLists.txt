@@ -6,10 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(.)
 
 add_executable(YUMSH_classes
-        B.cpp
         Heap.h
         Heap_module.cpp
         C.cpp
         Trie.h
+        Trie_module.cpp
 )
 
