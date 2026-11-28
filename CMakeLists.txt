@@ -8,8 +8,10 @@ include_directories(.)
 add_executable(YUMSH_classes
         Heap.h
         Heap_module.cpp
-        C.cpp
+        D.cpp
         Trie.h
         Trie_module.cpp
+        SegmentTree.h
+        D.cpp
 )
 
