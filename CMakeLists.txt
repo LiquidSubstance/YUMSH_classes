@@ -13,5 +13,6 @@ add_executable(YUMSH_classes
         Trie_module.cpp
         SegmentTree.h
         D.cpp
+        SegmentTree_module.cpp
 )
 
