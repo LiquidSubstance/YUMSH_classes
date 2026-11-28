@@ -1,8 +1,16 @@
-//
-// Created by HP on 28.11.2026.
-//
+#pragma once
+using namespace std;
+#include <vector>
 
-#ifndef YUMSH_CLASSES_РУФЗ_H
-#define YUMSH_CLASSES_РУФЗ_H
+class Heap {
+private:
+    vector<int> heap;
+public:
+    Heap();
 
-#endif //YUMSH_CLASSES_РУФЗ_H
+    void insert(int x);
+
+    int extract();
+
+    ~Heap();
+};
